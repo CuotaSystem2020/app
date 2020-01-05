@@ -34,10 +34,6 @@
 
         > .content {
             flex: 1;
-            color: red($color: #000000) !important;
-            .min {
-                margin-right: 20px;
-            }
         }
     }
 
@@ -48,8 +44,4 @@
             }
         }
     }
-}
-
-.min {
-    margin-right: 20px;
 }

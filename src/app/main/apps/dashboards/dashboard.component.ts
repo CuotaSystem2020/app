@@ -36,35 +36,33 @@ export class DashboardComponent implements OnInit {
     getClima(): void {
         this.climaService.getClima().then(data => {
             this.clima = JSON.parse(data);
-            let DirTable = [
-                "N",
-                "NNE",
-                "NE",
-                "ENE",
-                "E",
-                "ESE",
-                "SE",
-                "SSE",
-                "SOUTH",
-                "SSW",
-                "SW",
-                "WSW",
-                "W",
-                "WNW",
-                "NW",
-                "NNW",
-                "N"
-            ];
-
-            this.wind_direction =
-                DirTable[
-                    Math.floor(
-                        (this.clima.current_observation.wind.direction +
-                            11.25) /
-                            22.5
-                    )
-                ];
+            this.getWindDirection(this.clima.current_observation.wind.direction)
         });
+    }
+
+    getWindDirection(direction: number) {
+        let DirTable = [
+            "N",
+            "NNE",
+            "NE",
+            "ENE",
+            "E",
+            "ESE",
+            "SE",
+            "SSE",
+            "SOUTH",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW",
+            "NNW",
+            "N"
+        ];
+
+        this.wind_direction =
+            DirTable[Math.floor((direction + 11.25) / 22.5)];
     }
 
     constructor(
