@@ -73,6 +73,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         this.languages = [
             {
+                id   : 'ar',
+                title: 'Spanish',
+                flag : 'ar'
+            },
+            {
                 id   : 'en',
                 title: 'English',
                 flag : 'us'
