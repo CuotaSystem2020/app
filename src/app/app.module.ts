@@ -27,14 +27,13 @@ import { AlumnosModule } from "./main/apps/alumnos/alumnos.module";
 import { ClimaService } from "./../@fuse/services/clima.service";
 
 const appRoutes: Routes = [
-    {
-        path: "**",
-        redirectTo: "dashboard"
-    }
+    
 ];
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [
+        AppComponent
+        ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

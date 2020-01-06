@@ -23,7 +23,7 @@ import { DashboardService } from "./dashboard.service";
 
 const routes: Routes = [
     {
-        path: "**",
+        path: "",
         component: DashboardComponent,
         resolve: {
             data: DashboardService
