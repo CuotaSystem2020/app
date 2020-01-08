@@ -5,7 +5,7 @@ import {
     Resolve,
     RouterStateSnapshot
 } from "@angular/router";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 import { api } from "./../../../../../config.private";
 
@@ -13,12 +13,15 @@ import { api } from "./../../../../../config.private";
 export class AlumnosService implements Resolve<any> {
     private urlAlumnos = api.url + "api/modules/cuotasystem";
 
+    alumnos: any[];
+    onAlumnosChanged: BehaviorSubject<any>;
+
     resolve(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
-            Promise.all([]).then(() => {
+            Promise.all([this.getAlumnos()]).then(() => {
                 resolve();
             }, reject);
         });
@@ -28,11 +31,15 @@ export class AlumnosService implements Resolve<any> {
         return new Promise((resolve, reject) => {
             this._httpClient
                 .get(this.urlAlumnos + "/alumnos")
-                .subscribe(response => {
+                .subscribe((response: any) => {                    
+                    this.alumnos = response;
+                    this.onAlumnosChanged.next(this.alumnos);
                     resolve(response);
                 });
         });
     }
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) {
+        this.onAlumnosChanged = new BehaviorSubject({});
+    }
 }
