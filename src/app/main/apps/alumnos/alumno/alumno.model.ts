@@ -1,4 +1,3 @@
-// // import { Contacto } from "./Contacto";
 // import { Escuela } from "./Escuela";
 // import { Autorizados } from "./Autorizados";
 
@@ -64,10 +63,6 @@ export class Alumno {
 }
 
 //TODO: Separar todo esto en otras clases
-class Contacto {
-    constructor(public tipo: String, public valor: String) {}
-}
-
 class Escuela {
     constructor(
         public _id: String,
