@@ -16,6 +16,7 @@ import {
     FuseSidebarModule,
     FuseThemeOptionsModule
 } from "@fuse/components";
+import { FuseConfirmDialogModule } from './../@fuse/components/confirm-dialog/confirm-dialog.module';
 
 import { fuseConfig } from "app/fuse-config";
 
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
         FuseSharedModule,
         FuseSidebarModule,
         FuseThemeOptionsModule,
+        FuseConfirmDialogModule,
 
         // App modules
         LayoutModule,

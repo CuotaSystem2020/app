@@ -25,7 +25,7 @@
                 <div fxLayout="column" fxLayoutAlign="start start"
                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2" *ngIf="pageType ==='edit'">
-                        {{alumno.nombre}}
+                        {{alumno.apellido}} {{alumno.nombre}}
                     </div>
                     <div class="h2" *ngIf="pageType ==='new'">
                         Alumno Nuevo
@@ -132,12 +132,12 @@
 
                         </mat-tab>
 
-                        <mat-tab label="Datos Escolares">
+                        <mat-tab *ngIf="alumno._id" label="Datos Escolares">
 
 
                         </mat-tab>
 
-                        <mat-tab label="Datos Familiares">
+                        <mat-tab *ngIf="alumno._id" label="Datos Familiares">
 
 
                         </mat-tab>
