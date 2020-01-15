@@ -26,7 +26,7 @@ import { avatarUrl } from "./../../../../../../config.private";
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AlumnosComponent {
+export class AlumnosComponent implements OnInit{
     url: any = avatarUrl.url;
 
     dataSource: FilesDataSource | null;

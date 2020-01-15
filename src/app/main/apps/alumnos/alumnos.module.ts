@@ -14,6 +14,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 import { FuseSharedModule } from "@fuse/shared.module";
 import { FuseWidgetModule } from "@fuse/components/widget/widget.module";
@@ -21,6 +22,7 @@ import { FuseWidgetModule } from "@fuse/components/widget/widget.module";
 import { AlumnosService } from "./alumnos.service";
 
 import { AlumnosComponent } from "./alumnos/alumnos.component";
+import { AlumnoComponent } from "./alumno/alumno.component";
 
 const routes: Routes = [
     {
@@ -29,19 +31,18 @@ const routes: Routes = [
         resolve: {
             data: AlumnosService
         }
+    },
+    {
+        path: "alumno/:id",
+        component: AlumnoComponent,
+        resolve: {
+            data: AlumnosService
+        }
     }
-    // {
-    //     path: "alumno/:id",
-    //     component: AlumnoComponent,
-    //     canActivate: [AuthGuard],
-    //     resolve: {
-    //         data: AlumnoService
-    //     }
-    // }
 ];
 
 @NgModule({
-    declarations: [AlumnosComponent],
+    declarations: [AlumnosComponent, AlumnoComponent],
     imports: [
         RouterModule.forChild(routes),
 
@@ -58,6 +59,7 @@ const routes: Routes = [
         MatSnackBarModule,
         MatTableModule,
         MatTabsModule,
+        MatDatepickerModule,
 
         FuseSharedModule,
         FuseWidgetModule

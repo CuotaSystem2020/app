@@ -1,0 +1,151 @@
+<div id="alumno" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/alumnos'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div class="alumno-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    <!-- <img *ngIf="alumno.images[0]" [src]="alumno.images[0].url">
+                    <img *ngIf="!alumno.images[0]" [src]="'assets/images/alumnos/sin_imagen.png'"> -->
+                </div>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{alumno.nombre}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        Alumno Nuevo
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Poner curso</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button class="save-alumno-button" [disabled]="alumnoForm.invalid"
+                *ngIf="pageType ==='new'" (click)="addAlumno()">
+                <span>Agregar Alumno</span>
+            </button>
+
+            <button mat-raised-button class="save-alumno-button" [disabled]="alumnoForm.invalid || alumnoForm.pristine"
+                *ngIf="pageType ==='edit'" (click)="saveAlumno()">
+                <span>Guardar</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="alumnoForm" [formGroup]="alumnoForm" class="alumno w-100-p" fxLayout="column"
+                    fxLayoutAlign="start" fxFlex="1 0 auto">
+
+                    <mat-tab-group>
+
+                        <mat-tab label="Datos Personales">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Nombre</mat-label>
+                                        <input matInput placeholder="Nombre" name="nombre" formControlName="nombre"
+                                            required>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Apellido</mat-label>
+                                        <input matInput placeholder="Apellido" name="apellido"
+                                            formControlName="apellido" required>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Documento</mat-label>
+                                        <input matInput placeholder="Documento" name="documento"
+                                            formControlName="documento" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+
+                                    <mat-form-field fxFlex>
+                                        <input matInput name="fechaNacimiento" formControlName="fechaNacimiento"
+                                            placeholder="Fecha de Nacimiento" [matDatepicker]="picker"
+                                            placeholder="Ingrese Fecha Nacimiento" (focus)="picker.open()">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Dirección</mat-label>
+                                        <input matInput placeholder="Dirección" name="direccion"
+                                            formControlName="direccion" required>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Localidad</mat-label>
+                                        <input matInput placeholder="Localidad" name="localidad"
+                                            formControlName="localidad" required>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Teléfono</mat-label>
+                                        <input matInput placeholder="Teléfono" name="telefono"
+                                            formControlName="telefono" required>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex>
+                                        <mat-label>Mail</mat-label>
+                                        <input matInput placeholder="Mail" name="mail" formControlName="mail" required>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex>
+                                        <textarea matInput name="observaciones" formControlName="observaciones"
+                                            placeholder="Observaciones">
+                                        </textarea>
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+
+
+
+                        </mat-tab>
+
+                        <mat-tab label="Datos Escolares">
+
+
+                        </mat-tab>
+
+                        <mat-tab label="Datos Familiares">
+
+
+                        </mat-tab>
+
+                    </mat-tab-group>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -32,7 +32,7 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <button mat-raised-button [routerLink]="'/apps/e-commerce/products/new'"
+            <button mat-raised-button [routerLink]="'/alumno/new'"
                 class="add-product-button fuse-white mt-24 mt-md-0">
                 <span>Agregar Nuevo Alumno</span>
             </button>
@@ -95,7 +95,7 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
 
                 <mat-row *matRowDef="let alumnos; columns: displayedColumns;" class="alumnos" matRipple
-                    [routerLink]="'/apps/e-commerce/products/'+alumnos._id+'/'+alumnos.handle">
+                    [routerLink]="'/alumno/'+alumnos._id">
                 </mat-row>
 
             </mat-table>
