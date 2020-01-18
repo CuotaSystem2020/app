@@ -17,8 +17,7 @@ export class FuseConfirmDialogComponent {
      */
 	constructor(public dialogRef: MatDialogRef<FuseConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) private data) {}
 
-	ngOnInit() {
-		debugger;
+	ngOnInit() {		
 		this.mensaje = this.data.mensaje;
 		this.confirmMessage = this.data.confirmMessage;
 		this.btnConfirm = this.data.btnConfirm;

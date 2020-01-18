@@ -43,6 +43,7 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 
 	createAlumnoForm(): FormGroup {
 		return this._formBuilder.group({
+			id: [ this.alumno.id ],
 			nombre: [ this.alumno.nombre ],
 			apellido: [ this.alumno.apellido ],
 			documento: [ this.alumno.documento ],
@@ -56,9 +57,9 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 	}
 
 	addAlumno() {
-		const alumnoNuevo = this.alumnoForm.getRawValue();
+		const alumno = this.alumnoForm.getRawValue();
 
-		this.alumnosService.saveAlumno(alumnoNuevo).then((data: Alumno) => {
+		this.alumnosService.saveAlumno(alumno).then((data: Alumno) => {
 			const dialogRef = this.dialog.open(FuseConfirmDialogComponent, {
 				data: {
 					mensaje: 'El Alumno se guardó correctamente! Ahora puede editar los demás datos.',
@@ -68,13 +69,35 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 			});
 
 			return dialogRef.afterClosed().subscribe((result) => {
-				this.alumno = data;
+				// this.alumno = data;
+				debugger;
+				this.alumno = new Alumno(data);
+				this.alumnoForm.patchValue({ id: this.alumno.id });
 				this.pageType = 'edit';
 			});
 		});
 	}
 
-	saveAlumno() {}
+	saveAlumno() {
+		debugger;
+		const alumno = this.alumnoForm.getRawValue();
+
+		this.alumnosService.updateAlumno(alumno).then((data: Alumno) => {
+			const dialogRef = this.dialog.open(FuseConfirmDialogComponent, {
+				data: {
+					mensaje: 'El Alumno se editó correctamente!',
+					btnConfirm: 'Aceptar'
+				},
+				width: '500px'
+			});
+
+			return dialogRef.afterClosed().subscribe((result) => {
+				// this.alumno = data;
+
+				this.pageType = 'edit';
+			});
+		});
+	}
 
 	ngOnDestroy() {
 		this._unsubscribeAll.next();
