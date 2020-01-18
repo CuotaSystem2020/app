@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -29,6 +30,7 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.alumnosService.onAlumnoChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((alumno) => {
+            debugger;
 			if (alumno) {
 				this.alumno = new Alumno(alumno);
 				this.pageType = 'edit';
@@ -92,9 +94,7 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 			});
 
 			return dialogRef.afterClosed().subscribe((result) => {
-				// this.alumno = data;
-
-				this.pageType = 'edit';
+				this.router.navigate([ '/alumnos' ]);
 			});
 		});
 	}
@@ -104,7 +104,12 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 		this._unsubscribeAll.complete();
 	}
 
-	constructor(private alumnosService: AlumnosService, private _formBuilder: FormBuilder, public dialog: MatDialog) {
+	constructor(
+		private alumnosService: AlumnosService,
+		private _formBuilder: FormBuilder,
+		public dialog: MatDialog,
+		private router: Router
+	) {
 		this.alumno = new Alumno();
 
 		this._unsubscribeAll = new Subject();

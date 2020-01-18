@@ -19,9 +19,9 @@ export class AlumnosService implements Resolve<any> {
 
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
 		this.routeParams = route.params;
-
+debugger;
 		let promise;
-		if (this.routeParams.id === 'new') {
+		if ((this.routeParams.id === 'new') || (this.routeParams.id)) {
 			promise = this.getAlumno();
 		} else {
 			promise = this.getAlumnos();
@@ -40,7 +40,7 @@ export class AlumnosService implements Resolve<any> {
 				this.onAlumnoChanged.next(false);
 				resolve(false);
 			} else {
-				this._httpClient.get(this.urlAlumnos + '/alumnos' + this.routeParams.id).subscribe((response: any) => {
+				this._httpClient.get(this.urlAlumnos + '/alumnos/' + this.routeParams.id).subscribe((response: any) => {
 					this.alumno = response;
 					this.onAlumnoChanged.next(this.alumno);
 					resolve(response);
