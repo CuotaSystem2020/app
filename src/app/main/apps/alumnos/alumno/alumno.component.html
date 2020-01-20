@@ -64,19 +64,19 @@
 
                             <div class="tab-content p-24" fusePerfectScrollbar>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Nombre</mat-label>
                                         <input matInput placeholder="Nombre" name="nombre" formControlName="nombre"
                                             required>
                                     </mat-form-field>
 
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Apellido</mat-label>
                                         <input matInput placeholder="Apellido" name="apellido"
                                             formControlName="apellido" required>
                                     </mat-form-field>
 
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Documento</mat-label>
                                         <input matInput placeholder="Documento" name="documento"
                                             formControlName="documento" required>
@@ -85,7 +85,7 @@
 
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
 
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <input matInput name="fechaNacimiento" formControlName="fechaNacimiento"
                                             placeholder="Fecha de Nacimiento" [matDatepicker]="picker"
                                             placeholder="Ingrese Fecha Nacimiento" (focus)="picker.open()">
@@ -93,13 +93,13 @@
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
 
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Dirección</mat-label>
                                         <input matInput placeholder="Dirección" name="direccion"
                                             formControlName="direccion" required>
                                     </mat-form-field>
 
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Localidad</mat-label>
                                         <input matInput placeholder="Localidad" name="localidad"
                                             formControlName="localidad" required>
@@ -108,23 +108,28 @@
                                 </div>
 
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
-                                    <mat-form-field fxFlex>
+
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Teléfono</mat-label>
                                         <input matInput placeholder="Teléfono" name="telefono"
                                             formControlName="telefono" required>
                                     </mat-form-field>
 
-                                    <mat-form-field fxFlex>
+                                    <mat-form-field fxFlex="30%">
                                         <mat-label>Mail</mat-label>
                                         <input matInput placeholder="Mail" name="mail" formControlName="mail" required>
                                     </mat-form-field>
 
+                                    <mat-checkbox fxFlex="30%" name="activo" formControlName="activo">Activo
+                                    </mat-checkbox>
+                                </div>
+
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
                                     <mat-form-field fxFlex>
                                         <textarea matInput name="observaciones" formControlName="observaciones"
                                             placeholder="Observaciones">
-                                        </textarea>
+                                    </textarea>
                                     </mat-form-field>
-
                                 </div>
                             </div>
 
@@ -134,11 +139,128 @@
 
                         <mat-tab *ngIf="pageType === 'edit'" label="Datos Escolares">
 
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <div formGroupName="escuela" fxLayout="row wrap" fxLayoutAlign="start center"
+                                    fxLayoutGap="30px">
 
+                                    <mat-form-field fxFlex="30%">
+                                        <input matInput value={{alumno.escuela.nombre}} name="nombre"
+                                            formControlName="nombre" placeholder="Escuela">
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex="30%">
+                                        <input matInput value={{alumno.escuela.direccion}} name="direccion"
+                                            formControlName="direccion" placeholder="Dirección">
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex="30%">
+                                        <mat-select value={{alumno.escuela.tipoEscuela}} name="tipoEscuela"
+                                            formControlName="tipoEscuela" placeholder="Tipo de Escuela">
+                                            <mat-option *ngFor="let t of tiposEscuela" [value]="t.value">
+                                                {{t.viewValue}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+                                    <mat-form-field fxFlex="30%">
+                                        <mat-select name="grado" formControlName="grado" placeholder="Grado">
+                                            <mat-option *ngFor="let g of grados" [value]="g.nombre">{{g.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex="30%">
+                                        <mat-select name="tipoAlumno" formControlName="tipoAlumno"
+                                            placeholder="Tipo de Alumno">
+                                            <mat-option value="regular">Regular</mat-option>
+                                            <mat-option value="individual">Individual</mat-option>
+                                            <mat-option value="bipersonal">Bi-Personal</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field fxFlex="30%">
+                                        <input matInput name="anoInicio" formControlName="anoInicio"
+                                            placeholder="Año Inicio" type="number">
+                                    </mat-form-field>
+                                </div>
+
+                                <div fxLayOut="row wrap" fxLayoutAlign="start center" fxLayoutGap="30px">
+                                    <mat-checkbox name="libretaSanitaria" formControlName="libretaSanitaria">Libreta
+                                        Sanitaria</mat-checkbox>
+                                </div>
+
+                            </div>
                         </mat-tab>
 
                         <mat-tab *ngIf="pageType === 'edit'" label="Datos Familiares">
+                            <div class="tab-content p-24" fusePerfectScrollbar>
 
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">people_outline</mat-icon>
+                                    <div class="h2 secondary-text">Hermanos</div>
+                                </div>
+
+                                <div class="autocomplete-hermanos" fxLayout="row wrap" fxLayoutAlign="start center"
+                                    fxLayoutGap="30px">
+                                    <mat-form-field fxFlex="50">
+                                        <input type="text" placeholder="Seleccione Hermano"
+                                            aria-label="Seleccione Hermano" matInput [formControl]="alumnoControl"
+                                            [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                            <mat-option *ngFor="let alumno of filteredAlumnos | async" [value]="alumno">
+                                                {{alumno.nombre}} {{alumno.apellido}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+
+                                    <button type="button" mat-mini-fab color="accent"
+                                        (click)="addHermano(alumnoControl.value)">
+                                        <mat-icon aria-label="Example icon-button with a heart icon">
+                                            add_circle_outline</mat-icon>
+                                    </button>
+                                </div>
+
+                                <div *ngIf="hermanosSeleccionados.length > 0" fxLayout="row wrap"
+                                    fxLayoutAlign="start center" fxLayoutGap="100">
+                                    <div fxFlex="50">
+                                        <mat-table #table [dataSource]="dataSourceHermanos">
+                                            <ng-container matColumnDef="nombre">
+                                                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                                                <mat-cell *matCellDef="let hermanosSeleccionados">
+                                                    {{hermanosSeleccionados.nombre}} </mat-cell>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="apellido">
+                                                <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+                                                <mat-cell *matCellDef="let hermanosSeleccionados">
+                                                    {{hermanosSeleccionados.apellido}}</mat-cell>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="documento">
+                                                <mat-header-cell *matHeaderCellDef> Documento </mat-header-cell>
+                                                <mat-cell *matCellDef="let hermanosSeleccionados">
+                                                    {{hermanosSeleccionados.documento}}</mat-cell>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="eliminar">
+                                                <mat-header-cell *matHeaderCellDef>Elimnar</mat-header-cell>
+                                                <mat-cell *matCellDef="let hermanosSeleccionados">
+                                                    <button mat-icon-button color="warn"
+                                                        (click)="borrarHermano(hermanosSeleccionados)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </mat-cell>
+                                            </ng-container>
+
+                                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                        </mat-table>
+                                    </div>
+                                </div>
+
+
+                            </div>
 
                         </mat-tab>
 

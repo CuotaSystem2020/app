@@ -64,7 +64,7 @@ export class Alumno {
 
 //TODO: Separar todo esto en otras clases
 class Escuela {
-	constructor(public _id: String, public nombre: String, public direccion: String, public tipoEscuela: String) {}
+	constructor(public nombre: String, public direccion: String, public tipoEscuela: String) {}
 }
 
 class Autorizados {
