@@ -61,7 +61,7 @@ export class AlumnosService implements Resolve<any> {
 
 	saveAlumno(alumno) {
 		return new Promise((resolve, reject) => {
-			this._httpClient.post(this.urlAlumnos + '/' + 'alumno', alumno).subscribe((response: any) => {
+			this._httpClient.post(this.urlAlumnos + '/alumno', alumno).subscribe((response: any) => {
 				resolve(response);
 			}, reject);
 		});
@@ -69,19 +69,26 @@ export class AlumnosService implements Resolve<any> {
 
 	saveHermano(hermano) {
 		return new Promise((resolve, reject) => {
-			this._httpClient.patch(this.urlAlumnos + '/' + 'hermano', hermano).subscribe((response: any) => {
+			this._httpClient.patch(this.urlAlumnos + '/hermano', hermano).subscribe((response: any) => {
 				resolve(response);
 			}, reject);
 		});
 	}
 
+	patchAlumno(alumno, params) {
+		return new Promise((resolve, reject) => {
+			this._httpClient.patch(this.urlAlumnos + '/alumno/' + alumno.id, params).subscribe((response) => {
+				resolve(response);
+			}, reject);
+		});
+	}
 	/**
      * Actualizar alumno
      *
      * @param alumno
      * @returns {Promise<any>}
      */
-	updateAlumno(alumno: Alumno): Promise<Alumno> {
+	editAlumno(alumno: Alumno): Promise<Alumno> {
 		return new Promise((resolve, reject) => {
 			this._httpClient.put(this.urlAlumnos + '/' + 'alumno/' + alumno.id, alumno).subscribe((response: any) => {
 				resolve(response);

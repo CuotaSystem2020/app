@@ -10,7 +10,12 @@ import { takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
 import { FuseConfirmDialogComponent } from './../../../../../@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatTableDataSource, MatDialog, MatDialogRef } from '@angular/material';
+import {
+	MatTableDataSource,
+	MatDialog,
+	MatDialogRef,
+	throwMatDialogContentAlreadyAttachedError
+} from '@angular/material';
 
 import { AlumnosService } from './../alumnos.service';
 import { GradosService } from './../../../../../@fuse/services/grados.service';
@@ -25,7 +30,7 @@ import { Alumno } from './alumno.model';
 	animations: fuseAnimations
 })
 export class AlumnoComponent implements OnInit, OnDestroy {
-	displayedColumns = [ 'nombre', 'apellido', 'eliminar' ];
+	displayedColumns = [ 'nombre', 'apellido', 'documento', 'eliminar' ];
 	dataSourceHermanos = new MatTableDataSource<any>();
 
 	alumno: Alumno;
@@ -35,7 +40,6 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 	alumnoForm: FormGroup;
 	alumnoControl = new FormControl();
 	filteredAlumnos: Observable<any[]>;
-	hermanosSeleccionados: any[] = [];
 
 	private _unsubscribeAll: Subject<any>;
 	fileNameDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -50,6 +54,8 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 			if (alumno) {
 				this.alumno = new Alumno(alumno);
 				this.pageType = 'edit';
+
+				this.dataSourceHermanos = new MatTableDataSource(this.alumno.hermanos);
 			} else {
 				this.pageType = 'new';
 				this.alumno = new Alumno();
@@ -83,7 +89,7 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 			tipoAlumno: [ this.alumno.tipoAlumno ],
 			anoInicio: [ this.alumno.anoInicio ],
 			libretaSanitaria: [ this.alumno.libretaSanitaria ],
-			hermanos: this._formBuilder.array([ this.initHermanos() ]),
+			// hermanos: this._formBuilder.array([ this.initHermanos() ]),
 			observaciones: [ this.alumno.observaciones ],
 			hermanoInput: null
 		});
@@ -91,9 +97,9 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 
 	initHermanos(): FormGroup {
 		return this._formBuilder.group({
-			nombre: [ '' ],
-			apellido: [ '' ],
-			documento: [ '' ]
+			nombre: [],
+			apellido: [],
+			documento: []
 		});
 	}
 
@@ -130,7 +136,7 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	addAlumno() {
+	saveAlumno() {
 		const alumno = this.alumnoForm.getRawValue();
 
 		this.alumnosService.saveAlumno(alumno).then((data: Alumno) => {
@@ -150,10 +156,10 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	saveAlumno() {
+	editAlumno() {
 		const alumno = this.alumnoForm.getRawValue();
 
-		this.alumnosService.updateAlumno(alumno).then((data: Alumno) => {
+		this.alumnosService.editAlumno(alumno).then((data: Alumno) => {
 			const dialogRef = this.dialog.open(FuseConfirmDialogComponent, {
 				data: {
 					mensaje: 'El Alumno se editó correctamente!',
@@ -168,20 +174,21 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	addHermano(hermano) {
-		const index = this.hermanosSeleccionados.indexOf(hermano);
+	addHermano(hermano: any) {
+		const index = this.alumno.hermanos.find((h) => h._id === hermano.id);
 
-		if (hermano && index === -1) {
+		if (hermano && !index) {
 			let patch = {
 				op: 'hermano',
 				hermano: hermano,
 				idAlumno: this.alumno.id
 			};
-			debugger;
 
-			this.alumnosService.saveHermano(patch).then((data) => {
-				this.hermanosSeleccionados.push(data);
-				this.dataSourceHermanos = new MatTableDataSource(this.hermanosSeleccionados);
+			this.alumnosService.saveHermano(patch).then((data: any) => {
+				this.alumno.hermanos.push(data.hermanos); // Permite mostrar la tabla de hermanos
+				this.dataSourceHermanos = new MatTableDataSource(data.hermanos);
+
+				this.alumnoControl.setValue('');
 			});
 		} else {
 			const dialogRef = this.dialog.open(FuseConfirmDialogComponent, {
@@ -193,6 +200,19 @@ export class AlumnoComponent implements OnInit, OnDestroy {
 			});
 			return dialogRef.afterClosed();
 		}
+	}
+
+	async deleteHermano(alumno, hermano) {
+		debugger;
+		let params = {
+			op: 'deleteHermano',
+			hermano: hermano
+		};
+
+		this.alumnosService.patchAlumno(alumno, params).then((data: any) => {
+			this.alumno.hermanos.push(data.hermanos); // Permite mostrar la tabla de hermanos
+			this.dataSourceHermanos = new MatTableDataSource(data.hermanos);
+		});
 	}
 
 	ngOnDestroy() {

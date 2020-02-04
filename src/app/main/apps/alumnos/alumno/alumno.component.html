@@ -38,12 +38,12 @@
             <!-- / APP TITLE -->
 
             <button mat-raised-button class="save-alumno-button" [disabled]="alumnoForm.invalid"
-                *ngIf="pageType ==='new'" (click)="addAlumno()">
+                *ngIf="pageType ==='new'" (click)="saveAlumno()">
                 <span>Agregar Alumno</span>
             </button>
 
             <button mat-raised-button class="save-alumno-button" [disabled]="alumnoForm.invalid || alumnoForm.pristine"
-                *ngIf="pageType ==='edit'" (click)="saveAlumno()">
+                *ngIf="pageType ==='edit'" (click)="editAlumno()">
                 <span>Guardar</span>
             </button>
         </div>
@@ -221,7 +221,7 @@
                                     </button>
                                 </div>
 
-                                <div *ngIf="hermanosSeleccionados.length > 0" fxLayout="row wrap"
+                                <div *ngIf="alumno?.hermanos.length > 0" fxLayout="row wrap"
                                     fxLayoutAlign="start center" fxLayoutGap="100">
                                     <div fxFlex="50">
                                         <mat-table #table [dataSource]="dataSourceHermanos">
@@ -247,7 +247,7 @@
                                                 <mat-header-cell *matHeaderCellDef>Elimnar</mat-header-cell>
                                                 <mat-cell *matCellDef="let hermanosSeleccionados">
                                                     <button mat-icon-button color="warn"
-                                                        (click)="borrarHermano(hermanosSeleccionados)">
+                                                        (click)="deleteHermano(alumno, hermanosSeleccionados)">
                                                         <mat-icon>delete</mat-icon>
                                                     </button>
                                                 </mat-cell>
